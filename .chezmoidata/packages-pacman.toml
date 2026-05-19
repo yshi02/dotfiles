@@ -1,0 +1,55 @@
+[packages.pacman]
+core = [
+    "base-devel",
+    "curl",
+    "git",
+    "networkmanager",
+    "tmux",
+    "ufw",
+    "unzip",
+    "vim",
+    "wget",
+    "zsh",
+]
+
+base = [
+    # audio
+    "pipewire",
+    "pipewire-audio",
+    "pipewire-pulse",
+    "sof-firmware",
+    "wireplumber",
+
+    # basic desktop environment
+    "hyprland",
+    "hyprlauncher",
+    "hyprpaper",
+    "thunar",
+    "xdg-utils",
+
+    # coding and basic development
+    "cmake",
+    "python",
+    "rustup",
+    "uv",
+
+    # fonts
+    "fontconfig",
+    "freetype2",
+    "noto-fonts-emoji",
+    "ttf-jetbrains-mono",
+    "ttf-nerd-fonts-symbols",
+
+    # tools
+    "7zip",
+    "fd",
+    "ffmpeg",
+    "fzf",
+    "imagemagick",
+    "jq",
+    "poppler",
+    "resvg",
+    "ripgrep",
+    "yazi",
+    "zoxide",
+]

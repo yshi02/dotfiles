@@ -1,0 +1,21 @@
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") .use_sudo -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+LABEL="[{{ .chezmoi.os }}-{{ .chezmoi.osRelease.id }}]"
+
+echo "$LABEL Installing packages via pacman..."
+
+packages=(
+    {{- range .packages.pacman.core }}
+"{{ . }}"
+    {{- end }}
+    {{- range .packages.pacman.base }}
+"{{ . }}"
+    {{- end }}
+)
+
+sudo pacman -S --needed --noconfirm "${packages[@]}"
+
+echo "$LABEL pacman packages installed."
+{{- end }}

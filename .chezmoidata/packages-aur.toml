@@ -1,0 +1,8 @@
+[packages.aur]
+base = [
+    # basic desktop environment
+    "wezterm-git",
+
+    # fonts
+    "otf-commit-mono",
+]

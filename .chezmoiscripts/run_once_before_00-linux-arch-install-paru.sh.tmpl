@@ -1,0 +1,30 @@
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") .use_sudo -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+LABEL="[linux-arch]"
+
+echo "$LABEL Installing paru (Arch Linux AUR helper)..."
+
+# Exit early if paru already exists
+if command -v paru >/dev/null 2>&1; then
+    echo "$LABEL paru already installed, skipping."
+    exit 0
+fi
+
+# Ensure base dependencies for building AUR packages exist
+sudo pacman -S --needed --noconfirm base-devel git
+
+# Clone and build paru from AUR
+tmpdir=$(mktemp -d)
+git clone https://aur.archlinux.org/paru.git "$tmpdir/paru"
+
+(
+    cd "$tmpdir/paru"
+    makepkg -si --noconfirm
+)
+
+rm -rf "$tmpdir"
+
+echo "$LABEL paru installaion complete."
+{{- end }}

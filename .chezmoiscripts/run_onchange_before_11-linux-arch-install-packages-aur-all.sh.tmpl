@@ -1,0 +1,18 @@
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") .use_sudo -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+LABEL="[{{ .chezmoi.os }}-{{ .chezmoi.osRelease.id }}]"
+
+echo "$LABEL Installing AUR packages via paru..."
+
+packages=(
+    {{- range .packages.aur.base }}
+"{{ . }}"
+    {{- end }}
+)
+
+paru -S --needed --noconfirm "${packages[@]}"
+
+echo "$LABEL AUR packages installed."
+{{- end }}

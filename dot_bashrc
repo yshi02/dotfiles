@@ -1,0 +1,39 @@
+# If not running interactively, don't do anything
+[[ $- == *i* ]] || return
+
+# Set XDG user directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# Set default editor
+export EDITOR=vim
+export GIT_EDITOR=vim
+
+# Common aliases
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+
+# Shell prompt
+set_prompt() {
+    local EXIT="$?"
+
+    # Colors
+    local RED="\[\e[31m\]"
+    local GREEN="\[\e[32m\]"
+    local BLUE="\[\e[94;1m\]"
+    local RESET="\[\e[0m\]"
+
+    # Exit code color
+    if [ "$EXIT" -eq 0 ]; then
+        local EXIT_COLOR="$GREEN"
+    else
+        local EXIT_COLOR="$RED"
+    fi
+
+    PS1="${BLUE}\w${RESET} ${EXIT_COLOR}\$ ${RESET}"
+}
+
+export PROMPT_DIRTRIM=3
+PROMPT_COMMAND=set_prompt
