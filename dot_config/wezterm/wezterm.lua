@@ -12,7 +12,7 @@ config.color_scheme = 'Raycast_Dark'
 -- Fonts
 
 config.font_size = 12
-config.font = wezterm.font_with_fallback { 'Commit Mono' }
+config.font = wezterm.font_with_fallback { 'CommitMono' }
 
 config.bold_brightens_ansi_colors = 'BrightAndBold'
 
