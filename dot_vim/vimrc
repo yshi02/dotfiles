@@ -1,0 +1,189 @@
+""""""""""""""""""""""""""""""""""""""""
+" Variables
+""""""""""""""""""""""""""""""""""""""""
+
+" used to set theme, has to be one of the plugin themes or defaults
+if !exists('g:my_colorscheme')
+    let g:my_colorscheme = 'everforest'
+endif
+
+" used to set theme {light, dark}
+if !exists('g:my_background')
+    let g:my_background = 'dark'
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Keymaps
+""""""""""""""""""""""""""""""""""""""""
+
+" <leader>
+let mapleader = " "
+
+" reload vim config
+nnoremap <leader>r :source $MYVIMRC<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Interface
+""""""""""""""""""""""""""""""""""""""""
+
+" disable vi comptibility
+set nocompatible
+
+" line numbers
+set number
+
+" enable mouse support
+set mouse=a
+
+" highlight cursor
+set cursorline
+
+" limit scrolling
+set scrolloff=10
+
+" do not wrap long lines
+set nowrap
+
+" always show status line
+set laststatus=2
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Editing
+""""""""""""""""""""""""""""""""""""""""
+
+" set default tab width to 4 spaces
+set tabstop=4
+
+" set default indent shift to 4 spaces
+set shiftwidth=4
+
+" use spaces instead of tabs by default
+set expandtab
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Search
+""""""""""""""""""""""""""""""""""""""""
+
+" show matching words
+set showmatch
+
+" use highlighting
+set hlsearch
+
+" incrementally highlight matches
+set incsearch
+
+" ignore case
+set ignorecase
+
+" allow exact matches for capitals
+set smartcase
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Misc
+""""""""""""""""""""""""""""""""""""""""
+
+" set encodings
+set encoding=utf-8
+set fileencoding=utf-8
+
+" don't save backup files
+set nobackup
+
+" use new regex engine for faster rendering
+set re=0
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""
+
+" plugins are managed by vim-plug
+" https://github.com/junegunn/vim-plug
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+
+call plug#begin()
+
+" register vim-plug itself to use vim help (plug-options)
+Plug 'junegunn/vim-plug'
+
+" vim-airline and themes
+" https://github.com/vim-airline/vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" theme:dracula
+" https://github.com/dracula/vim
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+" theme:everforest
+" https://github.com/sainnhe/everforest
+Plug 'sainnhe/everforest'
+
+" theme:gruvbox
+" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
+
+call plug#end()
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Themes
+""""""""""""""""""""""""""""""""""""""""
+
+" use 24-bit true-color mode
+" tmux version < 2.2 does not support this
+if has('termguicolors')
+    set termguicolors
+endif
+
+" set colorscheme options dynamically
+if g:my_colorscheme ==# 'everforest'
+    " set contrast {hard, medium, soft}
+    let g:everforest_background = 'hard'
+
+    " for better performance
+    let g:everforest_better_performance = 1
+
+    " set airline theme as well
+    let g:airline_theme = 'everforest'
+
+elseif g:my_colorscheme ==# 'gruvbox'
+    " enable italics
+    let g:gruvbox_italic = 1
+
+endif
+
+" set the background color dynamically
+execute 'set background=' . g:my_background
+
+" set the colorscheme dynamically
+execute 'colorscheme ' . g:my_colorscheme
+
+" enable symbols in airline
+let g:airline_powerline_fonts = 1
+
+""""""""""""""""""""""""""""""""""""""""
+" Post-plugin options
+""""""""""""""""""""""""""""""""""""""""
+
+" enable file type detection
+filetype on
+
+" enable loading plugins based on file type
+" see .vim/ftplugin/<filetype>.vim
+filetype plugin on
+
+" enable syntax highlighting
+syntax enable
+
