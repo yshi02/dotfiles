@@ -157,6 +157,9 @@ if g:my_colorscheme ==# 'everforest'
     " for better performance
     let g:everforest_better_performance = 1
 
+    " color the sign, fold, and line number columns
+    let g:everforest_sign_column_background = 'linenr'
+
     " set airline theme as well
     let g:airline_theme = 'everforest'
 
