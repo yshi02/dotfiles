@@ -15,25 +15,72 @@ export GIT_EDITOR=vim
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 
-# Shell prompt
+# Path helper
+path_prepend() {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+# Shell prompt helper
 set_prompt() {
     local EXIT="$?"
 
     # Colors
-    local RED="\[\e[31m\]"
-    local GREEN="\[\e[32m\]"
-    local BLUE="\[\e[94;1m\]"
+    local BWHITE="\[\e[37;1m\]"
+    local BRED="\[\e[31;1m\]"
+    local BGREEN="\[\e[32;1m\]"
+    local BBLUE="\[\e[94;1m\]"
+    local BCYAN="\[\e[36;1m\]"
+    local CYAN="\[\e[36m\]"
     local RESET="\[\e[0m\]"
 
-    # Exit code color
-    if [ "$EXIT" -eq 0 ]; then
-        local EXIT_COLOR="$GREEN"
+    # User and host info
+    local PREFIX="${BBLUE}\u@\h${BWHITE}:${RESET}"
+
+    # Working directory display
+    local DIR="$PWD"
+    if [[ "$DIR" == "$HOME"* ]]; then
+        DIR="~${DIR#$HOME}"
+    fi
+    local BASE="${DIR##*/}"
+    local PARENT="${DIR%/*}"
+    if [ "$DIR" = "$BASE" ]; then
+        local PATH_DISPLAY="${BCYAN}${BASE}${RESET}"
     else
-        local EXIT_COLOR="$RED"
+        local PATH_DISPLAY="${CYAN}${PARENT}/${BCYAN}${BASE}${RESET}"
     fi
 
-    PS1="${BLUE}\w${RESET} ${EXIT_COLOR}\$ ${RESET}"
+    # Prompt symbol
+    if [ "$EUID" -eq 0 ]; then
+        local PROMPT_SYMBOL="#"
+    else
+        local PROMPT_SYMBOL="$"
+    fi
+
+    # Prompt color
+    if [ "$EXIT" -eq 0 ]; then
+        local PROMPT="${BGREEN}${PROMPT_SYMBOL}${RESET}"
+    else
+        local PROMPT="${BRED}${PROMPT_SYMBOL}${RESET}"
+    fi
+
+    PS1="${PREFIX}${PATH_DISPLAY}\n${PROMPT} "
 }
 
-export PROMPT_DIRTRIM=3
+# Optional modular configs
+if [ -d "$HOME/.bashrc.d" ]; then
+    for rc in "$HOME"/.bashrc.d/*; do
+        [ -f "$rc" ] && . "$rc"
+    done
+    unset rc
+fi
+
+path_prepend "$HOME/.local/bin"
+export PATH
+
 PROMPT_COMMAND=set_prompt
+
+unset -f path_prepend
+
