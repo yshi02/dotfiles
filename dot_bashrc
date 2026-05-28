@@ -5,3 +5,6 @@
 
 load_rc_dir "$HOME/.shellrc"
 load_rc_dir "$HOME/.shellrc/bash"
+
+# direnv hook
+eval "$(direnv hook bash)"
