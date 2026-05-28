@@ -1,0 +1,11 @@
+language = en
+
+font-family = CommitMono
+
+theme = One Half Dark
+
+cursor-style = block
+
+window-padding-color = extend
+
+config-file = ?overrides
