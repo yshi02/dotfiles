@@ -117,6 +117,10 @@ call plug#begin()
 " register vim-plug itself to use vim help (plug-options)
 Plug 'junegunn/vim-plug'
 
+" asynchronous lint engine (+lsp)
+" https://github.com/dense-analysis/ale
+Plug 'dense-analysis/ale'
+
 " vim-airline and themes
 " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
@@ -135,6 +139,13 @@ Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
 
 call plug#end()
+
+
+""""""""""""""""""""""""""""""""""""""""
+" Separate config files
+""""""""""""""""""""""""""""""""""""""""
+
+execute 'source' expand('<sfile>:p:h') . '/ale.vim'
 
 
 """"""""""""""""""""""""""""""""""""""""
@@ -176,17 +187,15 @@ execute 'colorscheme ' . g:my_colorscheme
 " enable symbols in airline
 let g:airline_powerline_fonts = 1
 
+
 """"""""""""""""""""""""""""""""""""""""
 " Post-plugin options
 """"""""""""""""""""""""""""""""""""""""
 
-" enable file type detection
-filetype on
-
+" enable filetype plugin
 " enable loading plugins based on file type
 " see .vim/ftplugin/<filetype>.vim
-filetype plugin on
+filetype plugin indent on
 
 " enable syntax highlighting
 syntax enable
-
