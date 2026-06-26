@@ -6,11 +6,20 @@ set_prompt() {
     local WHITE="\[\e[97;1m\]"
     local RED="\[\e[91;1m\]"
     local GREEN="\[\e[92;1m\]"
+    local YELLOW="\[\e[93;1m\]"
     local BLUE="\[\e[94;1m\]"
     local PURPLE="\[\e[95;1m\]"
 
+    # Custom environments
+    local CUSTOM_ENV=""
+    if [ -n "$CONDA_DEFAULT_ENV" ]; then
+        CUSTOM_ENV="${YELLOW}(${CONDA_DEFAULT_ENV}) ${RESET}"
+    elif [ -n "$VIRTUAL_ENV" ]; then
+        CUSTOM_ENV="${YELLOW}($(basename "$VIRTUAL_ENV")) ${RESET}"
+    fi
+
     # User and host info
-    local PREFIX="${PURPLE}\u@\h${WHITE}:${RESET}"
+    local PREFIX="${CUSTOM_ENV}${PURPLE}\u@\h${WHITE}:${RESET}"
 
     # Working directory display
     local DIR="$PWD"
