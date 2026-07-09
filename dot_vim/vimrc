@@ -95,6 +95,9 @@ set fileencoding=utf-8
 " don't save backup files
 set nobackup
 
+" disable viminfo
+set viminfo=
+
 " use new regex engine for faster rendering
 set re=0
 
