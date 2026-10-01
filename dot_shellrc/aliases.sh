@@ -8,3 +8,12 @@ alias sshj-tunnel="PROXY_JUMP=1 ssh-tunnel"
 
 # Wrap tmux to avoid issues with direnv environment loading
 alias tmux='direnv exec / tmux'
+
+# Conditionally enable tmux passthrough for chafa
+chafa() {
+    if [ -n "$TMUX" ]; then
+        command chafa -f kitty --passthrough tmux "$@"
+    else
+        command chafa -f kitty "$@"
+    fi
+}
